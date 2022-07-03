@@ -1,0 +1,111 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "",
+        "description": "",
+        "contact": {
+            "email": "projetos.r@hotmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3003/v1",
+            "description": "API de test"
+        },
+        {
+            "url": "https://netlify.desafiotrademaster.com.br",
+            "description": "API de produção"
+        }
+    ],
+    "paths": {
+        "/entertainment": {
+            "post": {
+                "sumary": "Cadastro de entretenimentos",
+                "description": "Essa rota será responsável por cadastrar um novo entretenimento",
+                "tags": ["Entertainment"],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Entertainment"
+                            },
+                            "examples": {
+                                "entertainment": {
+                                    "value": {
+                                        "Name": "Homem Aranha",
+                                        "EntertainmentType_Id": "0E984725-C51C-4BF4-9960-E1C80E27ABA0"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Entertainment already exists!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Entertainment"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Entertainment": {
+                "type": "object",
+                "properties": {
+                    "Id": {
+                        "type": "string"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "EntertainmentType_Id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "EntertainmentStatus": {
+                "type": "object",
+                "properties": {
+                    "Description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "EntertainmentType": {
+                "type": "object",
+                "properties": {
+                    "Description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "EntertainmentOrder": {
+                "type": "object",
+                "properties": {
+                    "Entertainment_Id": {
+                        "type": "string"
+                    },
+                    "EntertainmentStatus_Id": {
+                        "type": "string"
+                    },
+                    "RentDays": {
+                        "type": "number"
+                    }
+                }
+            }
+        }
+    }
+}
