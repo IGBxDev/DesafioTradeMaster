@@ -27,7 +27,7 @@
                 "tags": ["Entertainment"],
                 "requestBody": {
                     "content":{
-                        "aplication/json":{
+                        "application/json":{
                             "schema":{
                                 "$ref": "#/components/schemas/Entertainment"
                             },
@@ -35,8 +35,8 @@
                             "examples": {
                                 "entertainment":{
                                     "value": {
-                                        "Name": "Homem Aranha",
-                                        "EntertainmentType_Id": "0E984725-C51C-4BF4-9960-E1C80E27ABA0"                                    
+                                        "name": "Homem Aranha",
+                                        "entertainmentType_Id": "1"                                    
                                     }
                                 }
                             }
@@ -53,7 +53,6 @@
                         "content":{
                             "aplication/json":{
                                 "schema":{
-                                    "type": "object",
                                     "$ref":"#/components/schemas/Entertainment"
                                 }
                             }
@@ -68,49 +67,62 @@
             "Entertainment":{
                 "type": "object",
                 "properties": {
-                    "Id": {
-                        "type": "string"
+                    "id": {
+                        "type": "number"
                     },
-                    "Name":{
+                    "name":{
                         "type":"string"
                     },
-                    "EntertainmentType_Id":{
-                        "type":"string"
+                    "entertainmentType_Id":{
+                        "type":"number"
                     }
-                }
+                },
+                "required": ["name", "id"]
             },
 
             "EntertainmentStatus":{
                 "type":"object",
                 "properties":{
-                    "Description":{
+                    "id":{
+                        "type":"number"
+                    },
+                    "description":{
                         "type":"string"
                     }
-                }
+                },
+                "required":["description"]
             },
 
             "EntertainmentType":{
                 "type":"object",
                 "properties":{
-                    "Description":{
+                    "id":{
+                        "type":"number"
+                    },
+                    "description":{
                         "type":"string"
                     }
-                }
+                },
+                "required":["description"]
             },
 
             "EntertainmentOrder":{
                 "type":"object",
                 "properties":{
-                    "Entertainment_Id": {
+                    "id":{
+                        "type":"number"
+                    },
+                    "entertainment_Id": {
                         "type":"string"
                     },
-                    "EntertainmentStatus_Id":{
+                    "entertainmentStatus_Id":{
                         "type":"string"
                     },
-                    "RentDays":{
+                    "rentDays":{
                         "type":"number"
                     }
-                }
+                },
+                "required":["entertainment_Id", "entertainmentStatus_Id", "rentDays"]
             }
         }
     }

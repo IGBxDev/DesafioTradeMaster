@@ -10,7 +10,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:3003/v1",
+            "url": "http://localhost:3003/",
             "description": "API de test"
         },
         {
@@ -19,7 +19,7 @@
         }
     ],
     "paths": {
-        "/entertainment": {
+        "/entertainment/create": {
             "post": {
                 "sumary": "Cadastro de entretenimentos",
                 "description": "Essa rota será responsável por cadastrar um novo entretenimento",

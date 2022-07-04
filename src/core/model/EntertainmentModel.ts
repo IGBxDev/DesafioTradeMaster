@@ -1,5 +1,4 @@
-type EntertainmentPropy = {
-    Id: number,
-    Name: string,
-    Type: [number]
+export type EntertainmentTypes = {
+    name: string,
+    entertainmentType_Id: number
 }
