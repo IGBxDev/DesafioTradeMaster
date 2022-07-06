@@ -1,30 +1,89 @@
 import {Request, Response} from 'express'
 import { EntertainmentTypes } from '../../core/model/EntertainmentModel';
+import { EntertainmentOrdeTypes } from '../../core/model/EntertainmentOrderModel';
 import { 
         create as CreateEntertainment,
-        findByName as findByNameEntertainment,
-        findByType as findByTypeeEntertainment
+        findByQuery as findByQueryEntertainment,
+        all as getAll,
+        createOrderRentOrSaler,
+        edit,
+        deleteItem
 }  from '../../core/services/EntertainmentServices'
 
-export const all = async (req: Request, res: Response) => {
-    const payload = {
-        name:  req.body.Name as string,
-        entertainmentType_Id: req.body.EntertainmentType_Id as number
-    }
-    
+import moment from 'moment';
+
+
+export const createOrder = async (req: Request, res: Response ) =>{
+    moment.locale('pt-BR');
+    const dateNow = new Date
     try {
-       await  CreateEntertainment(payload);
-    } catch (error) {
-        
+        const payload: EntertainmentOrdeTypes ={
+            entertainment_Id: req.body.entertainment_Id as number,
+            entertainmentStatus_Id: req.body.entertainmentStatus_Id as number,
+            rentDays: req.body.rentDays as number,
+            datePrevision: dateNow as any,
+            user: req.body.user as string            
+        }
+
+        const result: any = await createOrderRentOrSaler(payload)
+
+        if(result.erros){
+            throw new Error(result.erros.message)
+        }
+
+        res.status(200).send(result)
+
+    } catch (error: any) {
+        res.status(500).send({ message: error.message})
     }
-    res.status(200).send({ Id: 1, Name: 'Spider Man', Type: 1 })
+}
+
+export const editOrder = async (req: Request, res: Response) => {
+    const id = Number(req.params.id)
+    moment.locale('pt-BR');
+    const dateNow = new Date
+
+    const payload: EntertainmentOrdeTypes ={
+        entertainment_Id: req.body.entertainment_Id as number,
+        entertainmentStatus_Id: req.body.entertainmentStatus_Id as number,
+        rentDays: req.body.rentDays as number,
+        datePrevision: dateNow as any,
+        user: req.body.user as string            
+    }
+    try {
+        const result = await edit(payload, id)
+        res.status(200).send(result)
+    } catch (error: any) {
+        res.status(500).send(error.message)
+    }
+}
+
+export const deleteOrder = async (req: Request, res: Response) =>{
+    const id = Number(req.params.id)
+    try {
+        await deleteItem(id)
+        res.status(200).send({message: 'sucess'})
+    } catch (error: any) {
+        res.status(500).send(error.message)
+    }
+}
+
+export const all = async (req: Request, res: Response) => {
+    try {
+      const result = await getAll()
+      res.status(200).send(result)
+    } catch (error: any) {
+        res.status(500).send({ message: error.message} )   
+    }
 }
 
 export const create = async (req: Request, res: Response) => {
     try {
-        const payload: EntertainmentTypes = {
+        const payload = {
             name: req.body.name as string,
-            entertainmentType_Id: req.body.entertainmentType_Id as number
+            entertainmentType_Id: req.body.entertainmentType_Id as number,
+            entertainmentStatus_Id: req.body.entertainmentStatus_Id as number,
+            user: req.body.user
         }        
         const result: any = await CreateEntertainment(payload);
 
@@ -38,24 +97,21 @@ export const create = async (req: Request, res: Response) => {
     }
 }
 
-
-export const findByName = async (req: Request, res: Response) =>{
+export const findByQuery = async (req: Request, res: Response) =>{
     try {
-        const name = req.query.name as string
+        const payload = {
+            name: req.query.name as string,
+            type: req.query.type as string
+        }
 
-        const result = await findByNameEntertainment(name)
+        const result = await findByQueryEntertainment(payload)
+
+        if(result.message){
+            throw new Error(result.message)
+        }
+
         res.status(200).send(result)
-    } catch (error) {
-        res.status(500).send(error)
-    }
-}
-
-export const findByType = async (req: Request, res: Response) =>{
-    try {
-        const id = req.query.id as any        
-        findByTypeeEntertainment(id);
-
-    } catch (error) {
-        
+    } catch (error: any) {
+        res.status(500).send({ message: error.message})
     }
 }

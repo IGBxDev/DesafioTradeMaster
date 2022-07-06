@@ -7,8 +7,8 @@ describe('Teste Entertainment', ()=>{
         .get('/entertainment/all')
 
         expect(res.statusCode).toEqual(200)
-        expect(res.body).toHaveProperty('Id')
-        expect(res.body).toHaveProperty('Name')
-        expect(res.body).toHaveProperty('Type')
+        expect(res.body).toHaveProperty('id')
+        expect(res.body).toHaveProperty('name')
+        expect(res.body).toHaveProperty('type')
     })
 })

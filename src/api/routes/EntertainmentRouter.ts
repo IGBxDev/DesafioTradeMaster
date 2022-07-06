@@ -1,12 +1,13 @@
-import { all, create, findByName, findByType } from '../controller/EntertainmentController'
+import  * as controller  from '../controller/EntertainmentController'
 import express from 'express'
 
 const routes = express.Router()
 
-routes.get('/all', all)
-routes.post('/create', create )
-routes.get('/:name', findByName)
-routes.get('/findById/:id', findByType)
-
+routes.get('/all', controller.all)
+routes.post('/create', controller.create )
+routes.get('/:name:type', controller.findByQuery)
+routes.post('/rentOrSaler', controller.createOrder)
+routes.put('/edit/:id', controller.editOrder)
+routes.delete('/delete/:id', controller.deleteOrder)
 
 export default routes

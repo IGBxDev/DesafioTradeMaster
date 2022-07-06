@@ -60,6 +60,188 @@
                     }
                 }
             }
+        },
+
+        "/entertainment/rentOrSaler":{
+            "post":{
+                "sumary": "Retorna os entretenimento",
+                "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
+                "tags": ["Entertainment"],
+                "parameters":[
+                    {
+                        "in": "query",
+                        "name": "name",
+                        "requered": "true",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "type",
+                        "requered": "true",
+                        "type": "string"
+                    }
+            ],
+                
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Entertainment"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/entertainment/all":{
+            "get":{
+                "sumary": "Retorna todos os entretenimentos",
+                "description": "Essa rota será responsável por retornar todos os entretenimento",
+                "tags": ["Entertainment"],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Entertainment"
+                            },
+
+                            "examples": {
+                                "entertainment":{
+                                    "value": {
+                                        "name": "Homem Aranha",
+                                        "entertainmentType_Id": "1"                                    
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "400":{
+                       "description": "Entertainment already exists!" 
+                    },
+
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Entertainment"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/entertainment/findByParams?name={name}&type={type}":{
+            "get":{
+                "sumary": "Retorna os entretenimento",
+                "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
+                "tags": ["Entertainment"],
+                "parameters":[
+                    {
+                        "in": "query",
+                        "name": "name",
+                        "requered": "true",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "type",
+                        "requered": "true",
+                        "type": "string"
+                    }
+            ],
+                
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Entertainment"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/entertainment/edit/{id}":{
+            "put":{
+                "sumary": "Retorna os entretenimento",
+                "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
+                "tags": ["Entertainment"],
+                "parameters":[
+                    {
+                        "in": "query",
+                        "name": "name",
+                        "requered": "true",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "type",
+                        "requered": "true",
+                        "type": "string"
+                    }
+            ],
+                
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Entertainment"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/entertainment/delete/{id}":{
+            "delete":{
+                "sumary": "Retorna os entretenimento",
+                "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
+                "tags": ["Entertainment"],
+                "parameters":[
+                    {
+                        "in": "query",
+                        "name": "name",
+                        "requered": "true",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "type",
+                        "requered": "true",
+                        "type": "string"
+                    }
+            ],
+                
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Entertainment"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components":{
@@ -67,17 +249,23 @@
             "Entertainment":{
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "number"
-                    },
                     "name":{
                         "type":"string"
                     },
                     "entertainmentType_Id":{
                         "type":"number"
+                    },
+                    "entertainmentStatus_Id":{
+                        "type":"number"
+                    },
+                    "user":{
+                        "type":"number"
+                    },
+                    "active":{
+                        "type":"number"
                     }
                 },
-                "required": ["name", "id"]
+                "required": ["name", "entertainmentType_Id", "entertainmentStatus_Id", "user"]
             },
 
             "EntertainmentStatus":{
@@ -119,6 +307,16 @@
                         "type":"string"
                     },
                     "rentDays":{
+                        "type":"number",
+                        "description": "Se entertainmentStatus_Id = 1 deve ser informado rentDays > 0 "
+                    },
+                    "user":{
+                        "type":"string"
+                    },
+                    "dataPrevision":{
+                        "type":"Date"
+                    },
+                    "active":{
                         "type":"number"
                     }
                 },
