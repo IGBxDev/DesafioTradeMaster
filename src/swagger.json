@@ -275,14 +275,14 @@
             "get":{
                 "sumary": "Retorna os entretenimento",
                 "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
-                "tags": ["Entertainment"],               
+                "tags": ["EntertainmentStatus"],               
                 "responses":{
                     "200":{
                         "description": "OK",
                         "content":{
                             "aplication/json":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/Entertainment"
+                                    "$ref":"#/components/schemas/EntertainmentStatus"
                                 }
                             }
                         }
