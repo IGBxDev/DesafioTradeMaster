@@ -6,6 +6,8 @@ import swaggerOptions from './swagger.json'
 import cors from 'cors'
 
 import EntertainmentRouter from './api/routes/EntertainmentRouter'
+import EntertainmentTypesRouter from './api/routes/EntertainmentTypesRouter'
+import EntertainmentStatusRouter from './api/routes/EntertainmentStatusRouter'
 
 const app = express()
 app.use(express.json())
@@ -32,6 +34,8 @@ app.use(cors({origin: "*", credentials: true})) //define que qualquer url pode a
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOptions));
 
 app.use('/entertainment', EntertainmentRouter)
+app.use('/entertainmentTypes', EntertainmentTypesRouter)
+app.use('/entertainmentStatus', EntertainmentStatusRouter)
 
 
 export default app

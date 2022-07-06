@@ -67,20 +67,27 @@
                 "sumary": "Retorna os entretenimento",
                 "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
                 "tags": ["Entertainment"],
-                "parameters":[
-                    {
-                        "in": "query",
-                        "name": "name",
-                        "requered": "true",
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "type",
-                        "requered": "true",
-                        "type": "string"
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/EntertainmentOrder"
+                            },
+
+                            "examples": {
+                                "entertainment":{
+                                    "value": {
+                                        "entertainment_Id": 1,
+                                        "entertainmentStatus_Id": 1,
+                                        "rentDays": 5,
+                                        "user": "robson teste",
+                                        "active": 1                                
+                                    }
+                                }
+                            }
+                        }
                     }
-            ],
+                },
                 
                 "responses":{
                     "200":{
@@ -242,6 +249,46 @@
                     }
                 }
             }
+        },
+
+        "/entertainmentTypes/all":{
+            "get":{
+                "sumary": "Retorna os entretenimento",
+                "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
+                "tags": ["Entertainment"],                
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Entertainment"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/entertainmentStatus/all":{
+            "get":{
+                "sumary": "Retorna os entretenimento",
+                "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
+                "tags": ["Entertainment"],               
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Entertainment"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components":{
@@ -301,10 +348,10 @@
                         "type":"number"
                     },
                     "entertainment_Id": {
-                        "type":"string"
+                        "type":"number"
                     },
                     "entertainmentStatus_Id":{
-                        "type":"string"
+                        "type":"number"
                     },
                     "rentDays":{
                         "type":"number",
@@ -320,7 +367,7 @@
                         "type":"number"
                     }
                 },
-                "required":["entertainment_Id", "entertainmentStatus_Id", "rentDays"]
+                "required":["entertainment_Id", "entertainmentStatus_Id", "rentDays", "user"]
             }
         }
     }
