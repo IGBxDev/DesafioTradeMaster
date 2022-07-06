@@ -5,9 +5,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "test": "jest",
-    "tsc": "./node_modules/typescript/bin/tsc",
-    "build": "tsc",
-    "postinstall": "npm run build",
+    "postinstall": "tsc",
     "start": "node ./build/server.js",
     "dev": "tsnd --transpile-only --ignore-watch node_modules ./src/server.ts",
     "migrations": "tsnd ./src/database/migrations/tables.ts"

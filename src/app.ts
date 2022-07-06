@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
-import swaggerUi from 'swagger-ui-express'
-import swaggerOptions from './swagger.json'
+// import swaggerUi from 'swagger-ui-express'
+// import swaggerOptions from './swagger.json'
 // import swaggerJsDoc  from 'swagger-jsdoc'
 
 import cors from 'cors'
@@ -8,31 +8,15 @@ import cors from 'cors'
 import EntertainmentRouter from './api/routes/EntertainmentRouter'
 import EntertainmentTypesRouter from './api/routes/EntertainmentTypesRouter'
 import EntertainmentStatusRouter from './api/routes/EntertainmentStatusRouter'
+import SwaggerRouter from './api/routes/SwaggerRouter'
 
 const app = express()
 app.use(express.json())
 app.use(cors({origin: "*", credentials: true})) //define que qualquer url pode acessar essa api
 
-// Extended: https://swagger.io/specification/#infoObject
-// const swaggerOptions = {
-//     swaggerDefinition: {
-//       info: {
-//         version: "1.0.0",
-//         title: "Customer API",
-//         description: "Customer API Information",
-//         contact: {
-//           name: "Amazing Developer"
-//         },
-//         servers: ["http://localhost:5000"]
-//       }
-//     },
-//     //['.routes/*.js']
-//     apis: ["**/*.ts"]
-//   };
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOptions));
 
-  // const swaggerDocs = swaggerJsDoc(swaggerOptions);
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOptions));
-
+app.use('/', SwaggerRouter)
 app.use('/entertainment', EntertainmentRouter)
 app.use('/entertainmentTypes', EntertainmentTypesRouter)
 app.use('/entertainmentStatus', EntertainmentStatusRouter)

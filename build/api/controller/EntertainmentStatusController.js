@@ -8,19 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const supertest_1 = __importDefault(require("supertest"));
-const app_1 = __importDefault(require("../../app"));
-describe('Teste Entertainment', () => {
-    it('Should get the all entertainment', () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield (0, supertest_1.default)(app_1.default)
-            .get('/entertainment/all');
-        expect(res.statusCode).toEqual(200);
-        expect(res.body).toHaveProperty('id');
-        expect(res.body).toHaveProperty('name');
-        expect(res.body).toHaveProperty('type');
-    }));
+exports.all = void 0;
+const EntertainmentStatusServices_1 = require("../../core/services/EntertainmentStatusServices");
+const all = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield (0, EntertainmentStatusServices_1.all)();
+        res.status(200).send(result);
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message });
+    }
 });
+exports.all = all;

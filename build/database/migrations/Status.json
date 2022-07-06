@@ -1,0 +1,14 @@
+[
+    {
+        "description": "Aluguel",
+        "active": 1
+    },
+    {
+        "description": "Venda",
+        "active": 1
+    },
+    {
+        "description": "Ambos",
+        "active": 1
+    }
+]

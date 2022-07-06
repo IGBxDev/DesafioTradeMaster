@@ -26,13 +26,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const controller = __importStar(require("../controller/EntertainmentController"));
+const controller = __importStar(require("../controller/EntertainmentStatusController"));
 const express_1 = __importDefault(require("express"));
 const routes = express_1.default.Router();
 routes.get('/all', controller.all);
-routes.post('/create', controller.create);
-routes.get('/:name:type', controller.findByQuery);
-routes.post('/rentOrSaler', controller.createOrder);
-routes.put('/edit/:id', controller.editOrder);
-routes.delete('/delete/:id', controller.deleteOrder);
 exports.default = routes;
