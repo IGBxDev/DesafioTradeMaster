@@ -43,11 +43,11 @@ const createTables = () => connection_1.connection.raw(`
 `)
     .then(() => { console.log(`Tabelas criada com suceso`); })
     .catch(printError);
-const insertEntertainmentType = () => (0, connection_1.connection)('EntertainmentType')
+const insertEntertainmentType = () => connection_1.connection('EntertainmentType')
     .insert(types_json_1.default)
     .then(() => { console.log("EntertainmentType insert ok"); })
     .catch(printError);
-const insertEntertainmentStatus = () => (0, connection_1.connection)('EntertainmentStatus')
+const insertEntertainmentStatus = () => connection_1.connection('EntertainmentStatus')
     .insert(Status_json_1.default)
     .then(() => { console.log("EntertainmentStatus insert ok"); })
     .catch(printError);

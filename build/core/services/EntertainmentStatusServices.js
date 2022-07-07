@@ -11,9 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.all = void 0;
 const connection_1 = require("../../database/connection");
-const all = () => __awaiter(void 0, void 0, void 0, function* () {
+exports.all = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        return yield (0, connection_1.connection)('EntertainmentStatus')
+        return yield connection_1.connection('EntertainmentStatus')
             .select("*")
             .where("active", "=", "1");
     }
@@ -21,4 +21,3 @@ const all = () => __awaiter(void 0, void 0, void 0, function* () {
         return error;
     }
 });
-exports.all = all;

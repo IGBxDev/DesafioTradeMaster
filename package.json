@@ -7,9 +7,8 @@
     "test": "jest",
     "start": "node ./build/server.js",
     "dev": "tsnd --transpile-only --ignore-watch node_modules ./src/server.ts",
-    "migrations": "tsnd ./src/database/migrations/tables.ts",
-    "build": "tsc",
-    "postinstall": "npm run build"
+    "migrations": "tsnd ./src/database/migrations/tables.ts"
+    
   },
   "repository": {
     "type": "git",

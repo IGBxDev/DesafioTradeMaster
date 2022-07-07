@@ -11,9 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllOrderSaler = void 0;
 const connection_1 = require("../../database/connection");
-const getAllOrderSaler = () => __awaiter(void 0, void 0, void 0, function* () {
+exports.getAllOrderSaler = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        return yield (0, connection_1.connection)('Entertainment as ent')
+        return yield connection_1.connection('Entertainment as ent')
             .select("ent.id as Entertainment_Id", "ent.name as Entertainment_Titulo", "entT.id as EntertainmentType_Id", "entT.description as EntertainmentType_Description", "entS.id as EntertainmentStatus_Id", "entS.description as EntertainmentStatus_Description")
             .innerJoin("EntertainmentType as entT", "entT.id", "=", "ent.entertainmentType_Id")
             .innerJoin("EntertainmentOrder as entO", "entO.entertainment_Id", "=", "ent.Id")
@@ -27,4 +27,3 @@ const getAllOrderSaler = () => __awaiter(void 0, void 0, void 0, function* () {
         return error;
     }
 });
-exports.getAllOrderSaler = getAllOrderSaler;

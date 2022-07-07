@@ -23,7 +23,7 @@ const message = {
         REQUERIDE_USER: { status: 400, message: 'Necessário informar a quantidade de dias' }
     }
 };
-const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     moment_1.default.locale('pt-BR');
     const dateNow = new Date;
     try {
@@ -35,7 +35,7 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             user: req.body.user,
             name: req.body.name
         };
-        const result = yield (0, EntertainmentServices_1.createOrderRentOrSaler)(payload);
+        const result = yield EntertainmentServices_1.createOrderRentOrSaler(payload);
         if (result.erros) {
             throw new Error(result.erros.message);
         }
@@ -48,8 +48,7 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(500).send({ message: error.message });
     }
 });
-exports.createOrder = createOrder;
-const editOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.editOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(req.params.id);
     moment_1.default.locale('pt-BR');
     const dateNow = new Date;
@@ -62,7 +61,7 @@ const editOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         name: req.body.name
     };
     try {
-        const result = yield (0, EntertainmentServices_1.edit)(payload, id);
+        const result = yield EntertainmentServices_1.edit(payload, id);
         if (result.sqlMessage) {
             throw new Error(result);
         }
@@ -72,11 +71,10 @@ const editOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).send(error.message);
     }
 });
-exports.editOrder = editOrder;
-const deleteOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.deleteOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(req.params.id);
     try {
-        const result = yield (0, EntertainmentServices_1.deleteItem)(id);
+        const result = yield EntertainmentServices_1.deleteItem(id);
         if (result.sqlMessage) {
             throw new Error(result);
         }
@@ -86,10 +84,9 @@ const deleteOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(500).send(error.message);
     }
 });
-exports.deleteOrder = deleteOrder;
-const all = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.all = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield (0, EntertainmentServices_1.all)();
+        const result = yield EntertainmentServices_1.all();
         if (result.sqlMessage) {
             throw new Error(result);
         }
@@ -99,8 +96,7 @@ const all = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).send({ message: error.message });
     }
 });
-exports.all = all;
-const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const payload = {
             name: req.body.name,
@@ -109,7 +105,7 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             user: req.body.user,
             rentDays: req.body.rentDays
         };
-        const result = yield (0, EntertainmentServices_1.create)(payload);
+        const result = yield EntertainmentServices_1.create(payload);
         if (result.errors) {
             throw new Error(result.message);
         }
@@ -142,14 +138,13 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).send(error.message);
     }
 });
-exports.create = create;
-const findByQuery = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.findByQuery = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const payload = {
             name: req.query.name,
             type: req.query.type
         };
-        const result = yield (0, EntertainmentServices_1.findByQuery)(payload);
+        const result = yield EntertainmentServices_1.findByQuery(payload);
         if (result.message) {
             throw new Error(result.message);
         }
@@ -162,4 +157,3 @@ const findByQuery = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(500).send({ message: error.message });
     }
 });
-exports.findByQuery = findByQuery;

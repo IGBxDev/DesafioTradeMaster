@@ -7,7 +7,7 @@ exports.connection = void 0;
 const knex_1 = __importDefault(require("knex"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-exports.connection = (0, knex_1.default)({
+exports.connection = knex_1.default({
     client: "mysql",
     // connection: {
     //     host: '127.0.0.1', //process.env.DB_HOST,
