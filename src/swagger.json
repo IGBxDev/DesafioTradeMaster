@@ -14,7 +14,7 @@
             "description": "API de test"
         },
         {
-            "url": "https://netlify.desafiotrademaster.com.br",
+            "url": "https://desafiotrademaster.herokuapp.com",
             "description": "API de produção"
         }
     ],
