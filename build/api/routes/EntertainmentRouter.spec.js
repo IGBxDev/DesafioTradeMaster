@@ -19,8 +19,23 @@ describe('Teste Entertainment', () => {
         const res = yield (0, supertest_1.default)(app_1.default)
             .get('/entertainment/all');
         expect(res.statusCode).toEqual(200);
-        expect(res.body).toHaveProperty('id');
-        expect(res.body).toHaveProperty('name');
-        expect(res.body).toHaveProperty('type');
+        expect(res.body).toEqual(expect.arrayContaining([] || [{}]));
+    }));
+    it('Create entertainment', () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app_1.default)
+            .post('/entertainment/create')
+            .set('Content-type', 'application/json')
+            .send({
+            name: "Home Aranha 1",
+            entertainmentType_Id: 1,
+            entertainmentStatus_Id: 1,
+            user: 'rafael jest',
+            rentDays: 2
+        });
+        console.log(res.body);
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toHaveProperty("description");
+        expect(res.body).toHaveProperty("response");
+        expect(res.body.response).toEqual(expect.arrayContaining([]));
     }));
 });

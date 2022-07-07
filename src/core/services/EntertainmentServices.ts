@@ -36,7 +36,7 @@ export const create = async (payload: EntertainmentTypes ) => {
          const payloadOrder: EntertainmentOrdeTypes = {
             entertainment_Id: resultInsert[0] as number,
             entertainmentStatus_Id: payload.entertainmentStatus_Id,
-            rentDays: 0 as number,
+            rentDays: payload.entertainmentStatus_Id === 1? payload.rentDays : 0 as number,
             user: payload.user as string,
             datePrevision: dateNow as any
          }
@@ -46,6 +46,10 @@ export const create = async (payload: EntertainmentTypes ) => {
         if(result.errors){
             throw new Error(result.message)
         } 
+
+        if(result.message){
+            throw new Error(result.message)
+        }
 
         return resultInsert
     } catch (error) {
@@ -110,24 +114,10 @@ export const createOrderRentOrSaler = async (payload: EntertainmentOrdeTypes) =>
             throw new Error(result.errors.message)
         }
 
-        // //Quando for aluguel é necessário informar a quantidade de dias maior que 0.
-        // if(payload.entertainmentStatus_Id === 1){
-        //     if(payload.rentDays === 0){
-        //         throw new Error("Necessário informar a quantidade de dias")
-        //     }
-            
-        //     if(payload.rentDays > 0){
-        //         payload.datePrevision = moment(payload.datePrevision, 'DD/MM/YYYY').add(payload.rentDays, 'd').format('YYYY/MM/DD') as any
-        //     }
-        // }        
-
-        // if(payload.rentDays === 0){
-        //     payload.datePrevision = moment(payload.datePrevision, 'DD/MM/YYYY').format('YYYY/MM/DD') as any
-        // }
-
         payload.datePrevision = validaDataPrevision(payload.entertainmentStatus_Id, payload.rentDays, payload.datePrevision)
 
         return await connection('EntertainmentOrder').insert(payload)
+
     } catch (error) {
         return error
     }
@@ -136,7 +126,10 @@ export const createOrderRentOrSaler = async (payload: EntertainmentOrdeTypes) =>
 
 export const edit = async (payload: EntertainmentOrdeTypes, id: number) =>{
     try {
-        const result = await connection('EntertainmentOrder')
+
+        let result: any
+
+        result = await connection('EntertainmentOrder')
         .update({
             entertainment_Id: payload.entertainment_Id,
             entertainmentStatus_Id: payload.entertainmentStatus_Id,
@@ -145,6 +138,28 @@ export const edit = async (payload: EntertainmentOrdeTypes, id: number) =>{
             datePrevision: validaDataPrevision(payload.entertainmentStatus_Id, payload.rentDays, payload.datePrevision)
         })
         .where("id", id)
+
+        if(result.erros){
+            throw new ErrorEvent(result.message)
+        }
+
+        if(result.message){
+            throw new ErrorEvent(result.message)
+        }
+
+        result = await connection('Entertainment')
+        .update({ name: payload.name})
+        .where("id", payload.entertainment_Id)
+
+        if(result.erros){
+            throw new ErrorEvent(result.message)
+        }
+
+        if(result.message){
+            throw new ErrorEvent(result.message)
+        }
+
+        return result
     } catch (error) {
         return error
     }

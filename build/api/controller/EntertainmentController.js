@@ -15,6 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.findByQuery = exports.create = exports.all = exports.deleteOrder = exports.editOrder = exports.createOrder = void 0;
 const EntertainmentServices_1 = require("../../core/services/EntertainmentServices");
 const moment_1 = __importDefault(require("moment"));
+const message = {
+    error: {
+        REQUERIDE_NAME: { status: 400, message: "name is a required field" },
+        REQUERIDE_ENTERTAINMENTTYPES_ID: { status: 400, message: "name is a required field" },
+        REQUERIDE_ENTERTAINMENTSTATUS_ID: { status: 400, message: "name is a required field" },
+        REQUERIDE_USER: { status: 400, message: 'Necessário informar a quantidade de dias' }
+    }
+};
 const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     moment_1.default.locale('pt-BR');
     const dateNow = new Date;
@@ -29,6 +37,9 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const result = yield (0, EntertainmentServices_1.createOrderRentOrSaler)(payload);
         if (result.erros) {
             throw new Error(result.erros.message);
+        }
+        if (result.sqlMessage) {
+            throw new Error(result);
         }
         res.status(200).send(result);
     }
@@ -50,6 +61,9 @@ const editOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     };
     try {
         const result = yield (0, EntertainmentServices_1.edit)(payload, id);
+        if (result.sqlMessage) {
+            throw new Error(result);
+        }
         res.status(200).send(result);
     }
     catch (error) {
@@ -60,7 +74,10 @@ exports.editOrder = editOrder;
 const deleteOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = Number(req.params.id);
     try {
-        yield (0, EntertainmentServices_1.deleteItem)(id);
+        const result = yield (0, EntertainmentServices_1.deleteItem)(id);
+        if (result.sqlMessage) {
+            throw new Error(result);
+        }
         res.status(200).send({ message: 'sucess' });
     }
     catch (error) {
@@ -71,6 +88,9 @@ exports.deleteOrder = deleteOrder;
 const all = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield (0, EntertainmentServices_1.all)();
+        if (result.sqlMessage) {
+            throw new Error(result);
+        }
         res.status(200).send(result);
     }
     catch (error) {
@@ -84,15 +104,39 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             name: req.body.name,
             entertainmentType_Id: req.body.entertainmentType_Id,
             entertainmentStatus_Id: req.body.entertainmentStatus_Id,
-            user: req.body.user
+            user: req.body.user,
+            rentDays: req.body.rentDays
         };
         const result = yield (0, EntertainmentServices_1.create)(payload);
         if (result.errors) {
             throw new Error(result.message);
         }
-        res.status(200).send({ description: 'OK', response: result });
+        if (result.message) {
+            throw new Error(result.message);
+        }
+        if (result.sqlMessage) {
+            throw new Error(result);
+        }
+        res.status(200).send({ description: 'Sucess', response: result });
     }
     catch (error) {
+        switch (error.message) {
+            case message.error.REQUERIDE_NAME.message:
+                res.status(message.error.REQUERIDE_NAME.status).send(message.error.REQUERIDE_NAME.message);
+                break;
+            case message.error.REQUERIDE_ENTERTAINMENTTYPES_ID.message:
+                res.status(message.error.REQUERIDE_ENTERTAINMENTTYPES_ID.status).send(message.error.REQUERIDE_ENTERTAINMENTTYPES_ID.message);
+                break;
+            case message.error.REQUERIDE_ENTERTAINMENTSTATUS_ID.message:
+                res.status(message.error.REQUERIDE_ENTERTAINMENTSTATUS_ID.status).send(message.error.REQUERIDE_ENTERTAINMENTSTATUS_ID.message);
+                break;
+            case message.error.REQUERIDE_USER.message:
+                res.status(message.error.REQUERIDE_USER.status).send(message.error.REQUERIDE_USER.message);
+                break;
+            default:
+                res.status(500).send(error.message);
+                break;
+        }
         res.status(500).send(error.message);
     }
 });
@@ -106,6 +150,9 @@ const findByQuery = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const result = yield (0, EntertainmentServices_1.findByQuery)(payload);
         if (result.message) {
             throw new Error(result.message);
+        }
+        if (result.sqlMessage) {
+            throw new Error(result);
         }
         res.status(200).send(result);
     }

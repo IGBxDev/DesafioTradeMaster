@@ -15,7 +15,6 @@ const SwaggerRouter_1 = __importDefault(require("./api/routes/SwaggerRouter"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({ origin: "*", credentials: true })); //define que qualquer url pode acessar essa api
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOptions));
 app.use('/', SwaggerRouter_1.default);
 app.use('/entertainment', EntertainmentRouter_1.default);
 app.use('/entertainmentTypes', EntertainmentTypesRouter_1.default);

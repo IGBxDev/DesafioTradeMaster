@@ -14,8 +14,6 @@ const app = express()
 app.use(express.json())
 app.use(cors({origin: "*", credentials: true})) //define que qualquer url pode acessar essa api
 
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOptions));
-
 app.use('/', SwaggerRouter)
 app.use('/entertainment', EntertainmentRouter)
 app.use('/entertainmentTypes', EntertainmentTypesRouter)

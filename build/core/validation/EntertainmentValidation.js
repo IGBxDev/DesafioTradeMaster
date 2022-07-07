@@ -43,7 +43,7 @@ const schemaQuery = Yup.object().shape({
     type: Yup.string(),
 });
 const schemaOrder = Yup.object().shape({
-    entertainment_Id: Yup.number().required().typeError("Necessário informar entertainment_Id "),
+    entertainment_Id: Yup.number().required().typeError("Necessário informar entertainment_Id"),
     entertainmentStatus_Id: Yup.number().required().typeError("Necessário informar entertainmentStatus_Id"),
     rentDays: Yup.number().required().typeError("Necessário informar rentDays"),
     user: Yup.string().required().typeError("Necessário informar user"),

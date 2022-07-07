@@ -43,12 +43,15 @@ const create = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         const payloadOrder = {
             entertainment_Id: resultInsert[0],
             entertainmentStatus_Id: payload.entertainmentStatus_Id,
-            rentDays: 0,
+            rentDays: payload.entertainmentStatus_Id === 1 ? payload.rentDays : 0,
             user: payload.user,
             datePrevision: dateNow
         };
         result = yield (0, exports.createOrderRentOrSaler)(payloadOrder);
         if (result.errors) {
+            throw new Error(result.message);
+        }
+        if (result.message) {
             throw new Error(result.message);
         }
         return resultInsert;
@@ -97,18 +100,6 @@ const createOrderRentOrSaler = (payload) => __awaiter(void 0, void 0, void 0, fu
         if (result.errors) {
             throw new Error(result.errors.message);
         }
-        // //Quando for aluguel é necessário informar a quantidade de dias maior que 0.
-        // if(payload.entertainmentStatus_Id === 1){
-        //     if(payload.rentDays === 0){
-        //         throw new Error("Necessário informar a quantidade de dias")
-        //     }
-        //     if(payload.rentDays > 0){
-        //         payload.datePrevision = moment(payload.datePrevision, 'DD/MM/YYYY').add(payload.rentDays, 'd').format('YYYY/MM/DD') as any
-        //     }
-        // }        
-        // if(payload.rentDays === 0){
-        //     payload.datePrevision = moment(payload.datePrevision, 'DD/MM/YYYY').format('YYYY/MM/DD') as any
-        // }
         payload.datePrevision = validaDataPrevision(payload.entertainmentStatus_Id, payload.rentDays, payload.datePrevision);
         return yield (0, connection_1.connection)('EntertainmentOrder').insert(payload);
     }

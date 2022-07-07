@@ -3,5 +3,6 @@ export type EntertainmentOrdeTypes = {
     entertainmentStatus_Id: number,
     rentDays: number,
     user: string,
-    datePrevision: Date
+    datePrevision: Date,
+    name: string
 } 
