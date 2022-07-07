@@ -38,7 +38,8 @@ export const create = async (payload: EntertainmentTypes ) => {
             entertainmentStatus_Id: payload.entertainmentStatus_Id,
             rentDays: payload.entertainmentStatus_Id === 1? payload.rentDays : 0 as number,
             user: payload.user as string,
-            datePrevision: dateNow as any
+            datePrevision: dateNow as any,
+            name: payload.name as string
          }
 
          result = await createOrderRentOrSaler(payloadOrder)

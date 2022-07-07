@@ -32,7 +32,8 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             entertainmentStatus_Id: req.body.entertainmentStatus_Id,
             rentDays: req.body.rentDays,
             datePrevision: dateNow,
-            user: req.body.user
+            user: req.body.user,
+            name: req.body.name
         };
         const result = yield (0, EntertainmentServices_1.createOrderRentOrSaler)(payload);
         if (result.erros) {
@@ -57,14 +58,15 @@ const editOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         entertainmentStatus_Id: req.body.entertainmentStatus_Id,
         rentDays: req.body.rentDays,
         datePrevision: dateNow,
-        user: req.body.user
+        user: req.body.user,
+        name: req.body.name
     };
     try {
         const result = yield (0, EntertainmentServices_1.edit)(payload, id);
         if (result.sqlMessage) {
             throw new Error(result);
         }
-        res.status(200).send(result);
+        res.status(200).send({ message: 'Sucess' });
     }
     catch (error) {
         res.status(500).send(error.message);

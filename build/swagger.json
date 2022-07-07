@@ -14,7 +14,7 @@
             "description": "API de test"
         },
         {
-            "url": "https://netlify.desafiotrademaster.com.br",
+            "url": "https://desafiotrademaster.herokuapp.com",
             "description": "API de produção"
         }
     ],
@@ -159,18 +159,32 @@
                 "tags": ["Entertainment"],
                 "parameters": [
                     {
-                        "in": "query",
-                        "name": "name",
+                        "in": "path",
+                        "name": "id",
                         "requered": "true",
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "type",
-                        "requered": "true",
-                        "type": "string"
+                        "type": "number"
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Entertainment"
+                            },
+                            "examples": {
+                                "entertainment": {
+                                    "value": {
+                                        "name": "Homem Aranha",
+                                        "entertainment_Id": 1,
+                                        "entertainmentStatus_Id": 1,
+                                        "user": "",
+                                        "rentDays": 0
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -192,16 +206,10 @@
                 "tags": ["Entertainment"],
                 "parameters": [
                     {
-                        "in": "query",
-                        "name": "name",
-                        "requered": "true",
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "type",
-                        "requered": "true",
-                        "type": "string"
+                        "in": "path",
+                        "name": "id",
+                        "required": "true",
+                        "type": "number"
                     }
                 ],
                 "responses": {

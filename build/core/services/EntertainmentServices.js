@@ -45,7 +45,8 @@ const create = (payload) => __awaiter(void 0, void 0, void 0, function* () {
             entertainmentStatus_Id: payload.entertainmentStatus_Id,
             rentDays: payload.entertainmentStatus_Id === 1 ? payload.rentDays : 0,
             user: payload.user,
-            datePrevision: dateNow
+            datePrevision: dateNow,
+            name: payload.name
         };
         result = yield (0, exports.createOrderRentOrSaler)(payloadOrder);
         if (result.errors) {
@@ -110,7 +111,8 @@ const createOrderRentOrSaler = (payload) => __awaiter(void 0, void 0, void 0, fu
 exports.createOrderRentOrSaler = createOrderRentOrSaler;
 const edit = (payload, id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield (0, connection_1.connection)('EntertainmentOrder')
+        let result;
+        result = yield (0, connection_1.connection)('EntertainmentOrder')
             .update({
             entertainment_Id: payload.entertainment_Id,
             entertainmentStatus_Id: payload.entertainmentStatus_Id,
@@ -119,6 +121,22 @@ const edit = (payload, id) => __awaiter(void 0, void 0, void 0, function* () {
             datePrevision: validaDataPrevision(payload.entertainmentStatus_Id, payload.rentDays, payload.datePrevision)
         })
             .where("id", id);
+        if (result.erros) {
+            throw new ErrorEvent(result.message);
+        }
+        if (result.message) {
+            throw new ErrorEvent(result.message);
+        }
+        result = yield (0, connection_1.connection)('Entertainment')
+            .update({ name: payload.name })
+            .where("id", payload.entertainment_Id);
+        if (result.erros) {
+            throw new ErrorEvent(result.message);
+        }
+        if (result.message) {
+            throw new ErrorEvent(result.message);
+        }
+        return result;
     }
     catch (error) {
         return error;
