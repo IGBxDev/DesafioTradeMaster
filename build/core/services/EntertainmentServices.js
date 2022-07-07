@@ -102,6 +102,7 @@ const createOrderRentOrSaler = (payload) => __awaiter(void 0, void 0, void 0, fu
             throw new Error(result.errors.message);
         }
         payload.datePrevision = validaDataPrevision(payload.entertainmentStatus_Id, payload.rentDays, payload.datePrevision);
+        delete payload.name;
         return yield (0, connection_1.connection)('EntertainmentOrder').insert(payload);
     }
     catch (error) {

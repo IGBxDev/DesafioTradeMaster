@@ -279,7 +279,30 @@
                     }
                 }
             }
+        },
+
+        "/entertainmentOrder/all":{
+            "get":{
+                "sumary": "Retorna todos os entretenimentos",
+                "description": "Essa rota será responsável por retornar todos os entretenimento",
+                "tags": ["EntertainmentOrder"],
+                
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/EntertainmentOrder"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
+
+
     },
     "components":{
         "schemas":{

@@ -8,6 +8,7 @@ import cors from 'cors'
 import EntertainmentRouter from './api/routes/EntertainmentRouter'
 import EntertainmentTypesRouter from './api/routes/EntertainmentTypesRouter'
 import EntertainmentStatusRouter from './api/routes/EntertainmentStatusRouter'
+import EntertainmentOrderRouter from './api/routes/EntertainmentOrderRouter'
 import SwaggerRouter from './api/routes/SwaggerRouter'
 
 const app = express()
@@ -18,6 +19,7 @@ app.use('/', SwaggerRouter)
 app.use('/entertainment', EntertainmentRouter)
 app.use('/entertainmentTypes', EntertainmentTypesRouter)
 app.use('/entertainmentStatus', EntertainmentStatusRouter)
+app.use('/entertainmentOrder', EntertainmentOrderRouter)
 
 
 export default app

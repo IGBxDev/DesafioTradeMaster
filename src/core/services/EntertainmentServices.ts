@@ -16,6 +16,8 @@ export const all = async () =>{
     }
 }
 
+
+
 export const create = async (payload: EntertainmentTypes ) => {
     const dateNow = new Date
     let result: any
@@ -33,7 +35,7 @@ export const create = async (payload: EntertainmentTypes ) => {
 
          const resultInsert = await connection('Entertainment').insert(insert)
 
-         const payloadOrder: EntertainmentOrdeTypes = {
+         const payloadOrder = {
             entertainment_Id: resultInsert[0] as number,
             entertainmentStatus_Id: payload.entertainmentStatus_Id,
             rentDays: payload.entertainmentStatus_Id === 1? payload.rentDays : 0 as number,
@@ -116,6 +118,7 @@ export const createOrderRentOrSaler = async (payload: EntertainmentOrdeTypes) =>
         }
 
         payload.datePrevision = validaDataPrevision(payload.entertainmentStatus_Id, payload.rentDays, payload.datePrevision)
+        delete (payload as any).name
 
         return await connection('EntertainmentOrder').insert(payload)
 
