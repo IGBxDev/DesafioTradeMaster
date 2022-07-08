@@ -41,7 +41,7 @@ Sua aplicação estará disponível no caminho [http://localhost:3003](http://lo
 O swagger estará disponível no caminho [http://localhost:3003/api-docs](http://localhost:3003/api-docs)\
 documentação dos endpoints disponível
   
-## Transpilasr seu projeto Typescript para NodeJs
+## Transpilar seu projeto Typescript para NodeJs
   Executar o comando: 
   ### tsc
   
