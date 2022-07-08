@@ -16,9 +16,9 @@ exports.deleteItem = exports.edit = exports.createOrderRentOrSaler = exports.fin
 const connection_1 = require("../../database/connection");
 const EntertainmentValidation_1 = require("../validation/EntertainmentValidation");
 const moment_1 = __importDefault(require("moment"));
-exports.all = () => __awaiter(void 0, void 0, void 0, function* () {
+const all = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        return yield connection_1.connection('Entertainment')
+        return yield (0, connection_1.connection)('Entertainment')
             .select("*")
             .where("active", "=", "1");
     }
@@ -26,11 +26,12 @@ exports.all = () => __awaiter(void 0, void 0, void 0, function* () {
         return error;
     }
 });
-exports.create = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+exports.all = all;
+const create = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const dateNow = new Date;
     let result;
     try {
-        result = yield EntertainmentValidation_1.validateBody(payload);
+        result = yield (0, EntertainmentValidation_1.validateBody)(payload);
         if (result.errors) {
             throw new Error(result.message);
         }
@@ -38,7 +39,7 @@ exports.create = (payload) => __awaiter(void 0, void 0, void 0, function* () {
             entertainmentType_Id: payload.entertainmentType_Id,
             name: payload.name
         };
-        const resultInsert = yield connection_1.connection('Entertainment').insert(insert);
+        const resultInsert = yield (0, connection_1.connection)('Entertainment').insert(insert);
         const payloadOrder = {
             entertainment_Id: resultInsert[0],
             entertainmentStatus_Id: payload.entertainmentStatus_Id,
@@ -47,7 +48,7 @@ exports.create = (payload) => __awaiter(void 0, void 0, void 0, function* () {
             datePrevision: dateNow,
             name: payload.name
         };
-        result = yield exports.createOrderRentOrSaler(payloadOrder);
+        result = yield (0, exports.createOrderRentOrSaler)(payloadOrder);
         if (result.errors) {
             throw new Error(result.message);
         }
@@ -60,13 +61,14 @@ exports.create = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         return error;
     }
 });
-exports.findByQuery = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+exports.create = create;
+const findByQuery = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let result;
-        result = yield EntertainmentValidation_1.validateQuery(payload.name, payload.type);
+        result = yield (0, EntertainmentValidation_1.validateQuery)(payload.name, payload.type);
         if (payload.name && payload.type) {
             result =
-                connection_1.connection("Entertainment")
+                (0, connection_1.connection)("Entertainment")
                     .select("Entertainment.id AS Id", "Entertainment.name AS Titulo", "EntertainmentType.description AS Type")
                     .innerJoin("EntertainmentType", "EntertainmentType.id", "=", "entertainmentType_Id")
                     .where('Entertainment.name', 'like', `%${payload.name}%`)
@@ -74,14 +76,14 @@ exports.findByQuery = (payload) => __awaiter(void 0, void 0, void 0, function* (
         }
         if (payload.name && !payload.type) {
             result =
-                connection_1.connection("Entertainment")
+                (0, connection_1.connection)("Entertainment")
                     .select("Entertainment.id AS Id", "Entertainment.name AS Titulo", "EntertainmentType.description AS Type")
                     .innerJoin("EntertainmentType", "EntertainmentType.id", "=", "entertainmentType_Id")
                     .where('Entertainment.name', 'like', `%${payload.name}%`);
         }
         if (!payload.name && payload.type) {
             result =
-                connection_1.connection("Entertainment")
+                (0, connection_1.connection)("Entertainment")
                     .select("Entertainment.id AS Id", "Entertainment.name AS Titulo", "EntertainmentType.description AS Type")
                     .innerJoin("EntertainmentType", "EntertainmentType.id", "=", "entertainmentType_Id")
                     .where("EntertainmentType.description", "like", `%${payload.type}%`);
@@ -92,24 +94,26 @@ exports.findByQuery = (payload) => __awaiter(void 0, void 0, void 0, function* (
         return error;
     }
 });
-exports.createOrderRentOrSaler = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+exports.findByQuery = findByQuery;
+const createOrderRentOrSaler = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield EntertainmentValidation_1.validadeOrder(payload);
+        const result = yield (0, EntertainmentValidation_1.validadeOrder)(payload);
         if (result.errors) {
             throw new Error(result.errors.message);
         }
         payload.datePrevision = validaDataPrevision(payload.entertainmentStatus_Id, payload.rentDays, payload.datePrevision);
         delete payload.name;
-        return yield connection_1.connection('EntertainmentOrder').insert(payload);
+        return yield (0, connection_1.connection)('EntertainmentOrder').insert(payload);
     }
     catch (error) {
         return error;
     }
 });
-exports.edit = (payload, id) => __awaiter(void 0, void 0, void 0, function* () {
+exports.createOrderRentOrSaler = createOrderRentOrSaler;
+const edit = (payload, id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let result;
-        result = yield connection_1.connection('EntertainmentOrder')
+        result = yield (0, connection_1.connection)('EntertainmentOrder')
             .update({
             entertainment_Id: payload.entertainment_Id,
             entertainmentStatus_Id: payload.entertainmentStatus_Id,
@@ -124,7 +128,7 @@ exports.edit = (payload, id) => __awaiter(void 0, void 0, void 0, function* () {
         if (result.message) {
             throw new ErrorEvent(result.message);
         }
-        result = yield connection_1.connection('Entertainment')
+        result = yield (0, connection_1.connection)('Entertainment')
             .update({ name: payload.name })
             .where("id", payload.entertainment_Id);
         if (result.erros) {
@@ -139,9 +143,10 @@ exports.edit = (payload, id) => __awaiter(void 0, void 0, void 0, function* () {
         return error;
     }
 });
-exports.deleteItem = (id) => __awaiter(void 0, void 0, void 0, function* () {
+exports.edit = edit;
+const deleteItem = (id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield connection_1.connection('EntertainmentOrder')
+        const result = yield (0, connection_1.connection)('EntertainmentOrder')
             .update({
             active: 0
         })
@@ -152,6 +157,7 @@ exports.deleteItem = (id) => __awaiter(void 0, void 0, void 0, function* () {
         return error;
     }
 });
+exports.deleteItem = deleteItem;
 const validaDataPrevision = (entertainmentStatus_Id, rentDays, datePrevision) => {
     //Quando for aluguel é necessário informar a quantidade de dias maior que 0.
     if (entertainmentStatus_Id === 1) {
@@ -159,11 +165,11 @@ const validaDataPrevision = (entertainmentStatus_Id, rentDays, datePrevision) =>
             throw new Error("Necessário informar a quantidade de dias");
         }
         if (rentDays > 0) {
-            datePrevision = moment_1.default(datePrevision, 'DD/MM/YYYY').add(rentDays, 'd').format('YYYY/MM/DD');
+            datePrevision = (0, moment_1.default)(datePrevision, 'DD/MM/YYYY').add(rentDays, 'd').format('YYYY/MM/DD');
         }
     }
     if (rentDays === 0) {
-        datePrevision = moment_1.default(datePrevision, 'DD/MM/YYYY').format('YYYY/MM/DD');
+        datePrevision = (0, moment_1.default)(datePrevision, 'DD/MM/YYYY').format('YYYY/MM/DD');
     }
     return datePrevision;
 };

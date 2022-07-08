@@ -11,12 +11,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.all = void 0;
 const EntertainmentOrderServices_1 = require("../../core/services/EntertainmentOrderServices");
-exports.all = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const all = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield EntertainmentOrderServices_1.getAllOrderSaler();
+        const result = yield (0, EntertainmentOrderServices_1.getAllOrderSaler)();
         res.status(200).send(result);
     }
     catch (error) {
         res.status(500).send({ message: error.message });
     }
 });
+exports.all = all;

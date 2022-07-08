@@ -13,9 +13,9 @@ const EntertainmentTypesRouter_1 = __importDefault(require("./api/routes/Enterta
 const EntertainmentStatusRouter_1 = __importDefault(require("./api/routes/EntertainmentStatusRouter"));
 const EntertainmentOrderRouter_1 = __importDefault(require("./api/routes/EntertainmentOrderRouter"));
 const SwaggerRouter_1 = __importDefault(require("./api/routes/SwaggerRouter"));
-const app = express_1.default();
+const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use(cors_1.default({ origin: "*", credentials: true })); //define que qualquer url pode acessar essa api
+app.use((0, cors_1.default)({ origin: "*", credentials: true })); //define que qualquer url pode acessar essa api
 app.use('/', SwaggerRouter_1.default);
 app.use('/entertainment', EntertainmentRouter_1.default);
 app.use('/entertainmentTypes', EntertainmentTypesRouter_1.default);

@@ -16,13 +16,13 @@ const supertest_1 = __importDefault(require("supertest"));
 const app_1 = __importDefault(require("../../app"));
 describe('Teste Entertainment', () => {
     it('Should get the all entertainment', () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield supertest_1.default(app_1.default)
+        const res = yield (0, supertest_1.default)(app_1.default)
             .get('/entertainment/all');
         expect(res.statusCode).toEqual(200);
         expect(res.body).toEqual(expect.arrayContaining([] || [{}]));
     }));
     it('Create entertainment', () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield supertest_1.default(app_1.default)
+        const res = yield (0, supertest_1.default)(app_1.default)
             .post('/entertainment/create')
             .set('Content-type', 'application/json')
             .send({

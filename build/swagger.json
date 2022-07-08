@@ -11,11 +11,11 @@
     "servers": [
         {
             "url": "http://localhost:3003/",
-            "description": "API de test"
+            "description": "API-Dev"
         },
         {
             "url": "https://desafiotrademaster.herokuapp.com",
-            "description": "API de produção"
+            "description": "API-Prod"
         }
     ],
     "paths": {
@@ -54,6 +54,9 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Inertanl Server Error"
                     }
                 }
             }
@@ -61,7 +64,7 @@
         "/entertainment/rentOrSaler": {
             "post": {
                 "sumary": "Retorna os entretenimento",
-                "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
+                "description": "Essa rota será responsável por registrar se o entretenimento está alugado, vendas ou ambos",
                 "tags": ["Entertainment"],
                 "requestBody": {
                     "content": {
@@ -103,9 +106,6 @@
                 "description": "Essa rota será responsável por retornar todos os entretenimento",
                 "tags": ["Entertainment"],
                 "responses": {
-                    "400": {
-                        "description": "Entertainment already exists!"
-                    },
                     "200": {
                         "description": "OK",
                         "content": {
@@ -122,7 +122,7 @@
         "/entertainment/findByParams?name={name}&type={type}": {
             "get": {
                 "sumary": "Retorna os entretenimento",
-                "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
+                "description": "Essa rota será responsável por efetuar a busca por nome ou tipo",
                 "tags": ["Entertainment"],
                 "parameters": [
                     {
@@ -155,7 +155,7 @@
         "/entertainment/edit/{id}": {
             "put": {
                 "sumary": "Retorna os entretenimento",
-                "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
+                "description": "Essa rota será responsável por editar um entretenimento ",
                 "tags": ["Entertainment"],
                 "parameters": [
                     {
@@ -202,7 +202,7 @@
         "/entertainment/delete/{id}": {
             "delete": {
                 "sumary": "Retorna os entretenimento",
-                "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
+                "description": "Essa rota será responsável por deletar um entretenimento",
                 "tags": ["Entertainment"],
                 "parameters": [
                     {
@@ -229,7 +229,7 @@
         "/entertainmentTypes/all": {
             "get": {
                 "sumary": "Retorna os entretenimento",
-                "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
+                "description": "Essa rota será responsável todos os tipos",
                 "tags": ["EntertainmentTypes"],
                 "responses": {
                     "200": {
@@ -248,7 +248,7 @@
         "/entertainmentStatus/all": {
             "get": {
                 "sumary": "Retorna os entretenimento",
-                "description": "Essa rota será responsável por retornar todos os entretenimento pelo nome ou tipo",
+                "description": "Essa rota será responsável por retornar todos status",
                 "tags": ["EntertainmentStatus"],
                 "responses": {
                     "200": {
@@ -267,7 +267,7 @@
         "/entertainmentOrder/all": {
             "get": {
                 "sumary": "Retorna todos os entretenimentos",
-                "description": "Essa rota será responsável por retornar todos os entretenimento",
+                "description": "Essa rota será responsável por retornar todos as ordem criada",
                 "tags": ["EntertainmentOrder"],
                 "responses": {
                     "200": {
@@ -318,7 +318,7 @@
                     }
                 }
             },
-            "EntertainmentType": {
+            "EntertainmentTypes": {
                 "type": "object",
                 "properties": {
                     "id": {
